@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+
+    <canvas id="gameCanvas" width="800" height="600"></canvas>
+    <script>
+
+        var canvas;
+        var canvasContext;
+        var ballX = 50;
+        var ballSpeedX = 15;
+
+        window.onload = function () {
+            canvas = document.getElementById('gameCanvas');
+            canvasContext = canvas.getContext('2d');
+
+            var framesPerSecond = 30;
+            setInterval(function () {
+                moveEverything();
+                drawEverything();
+            }, 1000 / framesPerSecond);
+        }
+
+        function moveEverything() {
+            ballX = ballX + ballSpeedX;
+            if (ballX < 0 || ballX > canvas.width) {
+                ballSpeedX = -ballSpeedX;
+            }
+        }
+
+        function drawEverything() {
+            colorRect(0, 0, canvas.width, canvas.height, 'black');
+            colorRect(10, 210, 10, 100, 'white');
+            colorCircle(ballX, 150, 10, 'white');
+        }
+
+        // Using colorCircle() as template to draw ROUND items on canvas.
+        function colorCircle(centerX, centerY, radius, drawColor) {
+            canvasContext.fillStyle = drawColor;
+            canvasContext.beginPath();
+            canvasContext.arc(centerX, centerY, radius, 0, Math.PI * 2, true);
+            canvasContext.fill();
+        }
+
+        // Using colorRect() as template to draw items on canvas.
+        function colorRect(leftX, topY, width, height, drawColor) {
+            canvasContext.fillStyle = drawColor;
+            canvasContext.fillRect(leftX, topY, width, height);
+        }
+
+    </script>
+
+</body>
+
+</html>
